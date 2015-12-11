@@ -1,8 +1,8 @@
 var express          = require('express');
 var app              = express();
 var mongoose         = require('mongoose');
-var ejs              = require('ejs');
-var ejsLayouts       = require('express-ejs-layouts');
+// var ejs              = require('ejs');
+// var ejsLayouts       = require('express-ejs-layouts');
 var morgan           = require('morgan');
 var bodyParser       = require('body-parser');
 var methodOverride   = require('method-override');
