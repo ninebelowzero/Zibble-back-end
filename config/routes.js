@@ -7,6 +7,8 @@ router.route('/characters')
   .post(CharactersController.characterCreate);
 
 router.route('/characters/:id')
-  .get(CharactersController.characterShow);
+  .get(CharactersController.characterShow)
+  .put(CharactersController.characterUpdate)
+  .delete(CharactersController.characterDestroy);
 
 module.exports = router;

@@ -1,9 +1,6 @@
 var Character = require('../models/character');
 
 function charactersIndex(req, res){
-
-  console.log("============================> In charactersIndex");
-
   Character.find({}, function(err, characters){
     if (err) return res.status(404).json({ message: "Error while finding characters." });
     res.status(200).json({ characters: characters });
@@ -11,8 +8,6 @@ function charactersIndex(req, res){
 }
 
 function characterCreate(req, res){
-
-  console.log("============================> In characterCreate");
 
   if (!req.body.String || !req.body.kMandarin || !req.body.kDefinition){
     return res.status(400).json({ message: "String, kMandarin, and kDefinition are required fields." });
@@ -34,18 +29,43 @@ function characterCreate(req, res){
 }
 
 function characterShow(req, res){
-  console.log("============================> In characterShow");
-
-  Character.findById(req.params.id, function(err, character){
-    if (err) return res.status(500).json({ message: err });
+ Character.findById(req.params.id, function(err, character){
     if (!character) return res.status(404).json({ message: "Character not found."});
-    return res.status(200).json({ character: character });
+    if (err) return res.status(500).json({ message: err });
+    res.status(200).json({ character: character });
   });
+}
 
+function characterUpdate(req, res){
+  Character.findById(req.params.id, function(err, character){
+    if (!character) return res.status(404).json({ message: "Character not found."});
+    if (err) return res.status(500).json({ message: err });
+ 
+    character.String              = req.body.String              || character.String;
+    character.kMandarin           = req.body.kMandarin           || character.kMandarin;
+    character.kDefinition         = req.body.kDefinition         || character.kDefinition;
+    character.kFrequency          = req.body.kFrequency          || character.kFrequency;
+    character.kTraditionalVariant = req.body.kTraditionalVariant || character.kTraditionalVariant;
+
+    character.save(function(err){
+      if (err) return res.status(500).json({ message: err });
+      res.status(200).json({ message: "Character successfully updated" });
+    });
+
+  });
+}
+
+function characterDestroy(req, res){
+  Character.findByIdAndRemove({ _id: req.params.id }, function(err){
+    if (err) return res.status(500).json({ message: err });
+    res.status(200).json({ message: "Character successfully deleted." });
+  });
 }
 
 module.exports = {
   charactersIndex : charactersIndex,
   characterShow   : characterShow,
-  characterCreate : characterCreate
+  characterCreate : characterCreate,
+  characterUpdate : characterUpdate,
+  characterDestroy: characterDestroy
 }
