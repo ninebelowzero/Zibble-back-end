@@ -33,7 +33,19 @@ function characterCreate(req, res){
 
 }
 
+function characterShow(req, res){
+  console.log("============================> In characterShow");
+
+  Character.findById(req.params.id, function(err, character){
+    if (err) return res.status(500).json({ message: err });
+    if (!character) return res.status(404).json({ message: "Character not found."});
+    return res.status(200).json({ character: character });
+  });
+
+}
+
 module.exports = {
   charactersIndex : charactersIndex,
+  characterShow   : characterShow,
   characterCreate : characterCreate
 }
