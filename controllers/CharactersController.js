@@ -62,10 +62,33 @@ function characterDestroy(req, res){
   });
 }
 
+// FOR SEEDING DATA ONLY:
+function charactersCreateInBulk(req, res){
+
+  var errorCount = 0;
+  req.body.forEach(function(character){
+    // console.log(i, character);
+    var newCharacter = new Character({
+      String              : character.String,
+      kMandarin           : character.kMandarin,
+      kDefinition         : character.kDefinition,
+      kFrequency          : character.kFrequency,
+      kTraditionalVariant : character.kTraditionalVariant
+    });
+
+    newCharacter.save(function(err){
+      if (err) errorCount++;
+    });
+  });
+
+  res.status(200).json({ message: "Characters added to database with " + errorCount + " errors."});
+}
+
 module.exports = {
-  charactersIndex : charactersIndex,
-  characterShow   : characterShow,
-  characterCreate : characterCreate,
-  characterUpdate : characterUpdate,
-  characterDestroy: characterDestroy
+  charactersIndex        : charactersIndex,
+  characterShow          : characterShow,
+  characterCreate        : characterCreate,
+  characterUpdate        : characterUpdate,
+  characterDestroy       : characterDestroy,
+  charactersCreateInBulk : charactersCreateInBulk
 }

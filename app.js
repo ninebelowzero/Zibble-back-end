@@ -17,7 +17,8 @@ mongoose.connect(MongoUri);
 // Middleware
 app.use(morgan('dev'));
 app.use(bodyParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '5000mb', extended: true }));
+app.use(bodyParser.json({ limit: '5000mb' }));
 
 // Method-override
 app.use(methodOverride(function(req, res){

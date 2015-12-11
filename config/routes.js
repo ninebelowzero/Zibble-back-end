@@ -11,4 +11,8 @@ router.route('/characters/:id')
   .put(CharactersController.characterUpdate)
   .delete(CharactersController.characterDestroy);
 
+// FOR SEEDING DATA ONLY:
+router.route('/characters/bulk')
+  .post(CharactersController.charactersCreateInBulk);
+
 module.exports = router;
