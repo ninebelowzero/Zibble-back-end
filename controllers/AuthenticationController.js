@@ -20,7 +20,22 @@ function register(req, res, next){
 }
 
 function login (req, res, next){
+  User.findOne({
+    username: req.body.username
+  }, function(err, user){
+    if (err) return res.status(500).send(err);
+    if (!user) return res.status(403).send({ message: "Username not found." });
+    if (!user.validPassword(req.body.password)) return res.status(403).send({ message: "Wrong password."});
 
+    var token = jwt.sign(user, secret, { expiresInMinutes: 10080 });
+
+    return res.status(200).send({
+      success: true,
+      message: "Successfully signed in.",
+      token  : token
+    })
+
+  });
 }
 
 module.exports = {
