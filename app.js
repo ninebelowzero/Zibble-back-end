@@ -1,28 +1,15 @@
 var express          = require('express');
-var app              = express();
+var expressJWT       = require('express-jwt');
 var mongoose         = require('mongoose');
-
-// AUTHENTICATION PACKAGES
-var passport         = require('passport');
-var flash            = require('flash');
-var cookieParser     = require('cookie-parser');
-var session          = require('express-session');
-
-// EJS - NOT NEEDED?
-// var ejs              = require('ejs');
-// var ejsLayouts       = require('express-ejs-layouts');
-
-// MIDDLEWARE
 var morgan           = require('morgan');
 var bodyParser       = require('body-parser');
-var methodOverride   = require('method-override');
-var path             = require('path');
-
+var passport         = require('passport');
+var app              = express();
 var config           = require('./config/config');
+var port             = process.env.PORT || 3000;
 
-// Mongoose
-var MongoUri         = process.env.MONGOLAB_URI || 'mongodb://localhost/zibble';
-mongoose.connect(MongoUri);
+// Connect to database
+mongoose.connect(config.database);
 
 // Middleware
 app.use(morgan('dev'));
@@ -30,31 +17,32 @@ app.use(bodyParser());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
-// Authentication
-app.use(cookieParser());
-app.use(session({ secret: 'TO-BE-CONFIRMED' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-// Method-override
-app.use(methodOverride(function(req, res){
-  if (req.body && typeof req.body === 'object' && '_method' in req.body){
-    var method = req.body._method;
-    delete req.body._method;
-    return method;
+// Auth
+require('./config/passport')(passport);
+var secret = config.secret;
+app
+  .use('/users', expressJWT({ secret: config.secret }))
+//  .unless({ path: ['/api/authorize', '/api/join'], method: 'post' });
+app.use(function (error, request, response, next){
+  if (error.name == 'UnauthorizedError'){
+    response.status(401).json({ message: "You must have authorization to view this page" });
   }
-}));
+});
 
-// Globals
+// CORS
+
 app.use(function(req, res, next){
-  global.user = req.user;
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
   next();
-})
+});
+
+app.use(passport.initialize());
 
 // Routes
 var router = require(__dirname + '/config/routes');
-app.use('/api', router);
+app.use('/', router);
 
-app.listen(process.env.PORT || 3000);
-console.log("Listening on port: 3000");
+app.listen(port);
+console.log("Listening on port:", port);

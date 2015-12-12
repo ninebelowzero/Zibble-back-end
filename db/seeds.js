@@ -7,7 +7,7 @@ for(var i = 1; i <= 214; i++){
     .on('response', function(response){
       console.log("Getting characters for radical " + i + ". Status code: " + response.statusCode);
     })
-    .pipe(request.post('http://localhost:3000/api/characters/bulk'));
+    .pipe(request.post('http://localhost:3000/characters/bulk'));
 
 }
 

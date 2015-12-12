@@ -1,6 +1,12 @@
-var express              = require('express');
-var router               = express.Router();
-var CharactersController = require('../controllers/CharactersController.js');
+var express                  = require('express');
+var router                   = express.Router();
+var CharactersController     = require('../controllers/CharactersController.js');
+var passport                 = require('passport');
+var AuthenticationController = require('../controllers/AuthenticationController.js');
+var UsersController          = require('../controllers/UsersController');
+
+router.post('/login', AuthenticationController.login);
+router.post('/register', AuthenticationController.register);
 
 router.route('/characters')
   .get(CharactersController.charactersIndex)
