@@ -21,4 +21,7 @@ router.route('/characters/:id')
 router.route('/characters/bulk')
   .post(CharactersController.charactersCreateInBulk);
 
+router.route('/game/firstbatch')
+  .get(CharactersController.getFirstBatch);
+
 module.exports = router;
