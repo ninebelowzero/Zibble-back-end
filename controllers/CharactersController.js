@@ -84,13 +84,6 @@ function charactersCreateInBulk(req, res){
   res.status(200).json({ message: "Characters added to database with " + errorCount + " errors."});
 }
 
-function getFirstBatch(req, res){
-  // console.log("Getting first batch.");
-  Character.find({ kFrequency: "1" }, function(err, characters){
-    if (err) return res.status(404).json({ message: "Error while finding characters." });
-    res.status(200).json({ characters: characters });
-  });
-} 
 
 module.exports = {
   charactersIndex        : charactersIndex,
@@ -98,6 +91,5 @@ module.exports = {
   characterCreate        : characterCreate,
   characterUpdate        : characterUpdate,
   characterDestroy       : characterDestroy,
-  charactersCreateInBulk : charactersCreateInBulk,
-  getFirstBatch          : getFirstBatch
+  charactersCreateInBulk : charactersCreateInBulk
 }

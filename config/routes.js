@@ -4,6 +4,7 @@ var CharactersController     = require('../controllers/CharactersController.js')
 var passport                 = require('passport');
 var AuthenticationController = require('../controllers/AuthenticationController.js');
 var UsersController          = require('../controllers/UsersController');
+var GameController           = require('../controllers/GameController');
 
 router.post('/login', AuthenticationController.login);
 router.post('/register', AuthenticationController.register);
@@ -22,6 +23,6 @@ router.route('/characters/bulk')
   .post(CharactersController.charactersCreateInBulk);
 
 router.route('/game/firstbatch')
-  .get(CharactersController.getFirstBatch);
+  .get(GameController.getFirstBatch);
 
 module.exports = router;
