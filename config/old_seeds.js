@@ -3,7 +3,7 @@ var config  = require("./config");
 var Character = require('../models/character');
 var mongoose  = require('mongoose');
 mongoose.connect(config.database);
-var errorCount = 0
+var errorCount = 0;
 
 function saveCharacter(character){
   console.log("creating document for " + character.String + ", "+ character.kMandarin)
