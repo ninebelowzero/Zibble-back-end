@@ -1,4 +1,5 @@
 var request = require('request');
+var config  = require("./config");
 
 for(var i = 1; i <= 214; i++){
 
@@ -7,7 +8,7 @@ for(var i = 1; i <= 214; i++){
     .on('response', function(response){
       console.log("Getting characters for radical " + i + ". Status code: " + response.statusCode);
     })
-    .pipe(request.post('http://localhost:3000/characters/bulk'));
+    .pipe(request.post(config.host + '/characters/bulk'));
 
 }
 

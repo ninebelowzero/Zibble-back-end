@@ -19,7 +19,7 @@ function saveCharacter(character){
 }
 
 function importCharacters(){
-  for(var i = 1; i <= 214; i++){
+  for(var i = 1; i <= 50; i++){
     
     var url = 'http://ccdb.hemiola.com/characters/radicals/' + i + '?filter=gb+!simplifiable&fields=String,kMandarin,kFrequency, kDefinition,kTraditionalVariant'
     console.log(url)
@@ -35,7 +35,7 @@ function importCharacters(){
         console.log("response status = " + response.statusCode);
       }
 
-      if(i == 214){
+      if(i == 50){
         console.log(errorCount + " errors happened for the whole import");
         process.exit()
       }
@@ -46,7 +46,7 @@ function importCharacters(){
 }
 
 Character.remove({}, function(err, result) {
-  if(err)  throw err;
-  console.log("dropped collection Character.... going to import now !!");
-  importCharacters()
+  if(err) throw err;
+  console.log("Dropped collection Character.... importing.");
+  importCharacters();
 });

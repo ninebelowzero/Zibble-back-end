@@ -64,7 +64,7 @@ function characterDestroy(req, res){
 
 // FOR SEEDING DATA ONLY:
 function charactersCreateInBulk(req, res){
-
+  console.log("received " + req.body.count + "records")
   var errorCount = 0;
   req.body.forEach(function(character){
     // console.log(i, character);
