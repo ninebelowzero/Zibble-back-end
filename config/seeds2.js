@@ -43,8 +43,4 @@ function importCharacters(){
   }
 }
 
-Character.remove({}, function(err, result) {
-  if(err) throw err;
-  console.log("Dropped collection Character.... importing.");
-  importCharacters();
-});
+importCharacters();
