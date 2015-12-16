@@ -3,7 +3,8 @@ var router                   = express.Router();
 var CharactersController     = require('../controllers/CharactersController.js');
 var passport                 = require('passport');
 var AuthenticationController = require('../controllers/AuthenticationController.js');
-var LevelsController           = require('../controllers/LevelsController');
+var LevelsController         = require('../controllers/LevelsController');
+var UsersController         = require('../controllers/UsersController');
 
 router.post('/login', AuthenticationController.login);
 router.post('/register', AuthenticationController.register);
@@ -23,5 +24,8 @@ router.route('/characters/bulk')
 
 router.route('/levels/:id')
   .get(LevelsController.show);
+
+router.route('/users/:id')
+  .put(UsersController.update);
 
 module.exports = router;
