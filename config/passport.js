@@ -14,10 +14,11 @@ module.exports = function(passport){
         if (err) return done(err);
         if (user) return done(null, false);
 
-        var newUser      = new User();
-        newUser.username = username;
-        newUser.email    = req.body.email,
-        newUser.password = password;
+        var newUser        = new User();
+        newUser.username   = username;
+        newUser.email      = req.body.email,
+        newUser.experience = req.body.experience;
+        newUser.password   = password;
 
         newUser.save(function(err){
           if (err) return done(err);

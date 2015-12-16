@@ -3,7 +3,6 @@ var router                   = express.Router();
 var CharactersController     = require('../controllers/CharactersController.js');
 var passport                 = require('passport');
 var AuthenticationController = require('../controllers/AuthenticationController.js');
-var UsersController          = require('../controllers/UsersController');
 var LevelsController           = require('../controllers/LevelsController');
 
 router.post('/login', AuthenticationController.login);
