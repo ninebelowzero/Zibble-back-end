@@ -4,6 +4,8 @@ function update(req, res){
   User.findById(req.params.id, function(err, user){
     if (!user) return res.status(404).json({ message: "User not found." });
     if (err) return res.status(500).json({ message: err });
+
+    console.log("req.body:", req.body);
       
     user.email           = req.body.email            || user.email;         
     user.password        = req.body.password         || user.password;      

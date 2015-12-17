@@ -7,6 +7,7 @@ var passport         = require('passport');
 var app              = express();
 var config           = require('./config/config');
 var port             = process.env.PORT || 3000;
+var cors             = require('cors');
 
 // Connect to database
 mongoose.connect(config.database);
@@ -16,6 +17,9 @@ app.use(morgan('dev'));
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
+app.use(cors({
+  origin: "http://localhost:8000"
+}));
 
 // Auth
 require('./config/passport')(passport);
