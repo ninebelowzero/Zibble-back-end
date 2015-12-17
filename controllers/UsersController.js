@@ -29,5 +29,6 @@ function getBlockers(req, res){
 }
 
 module.exports = {
-  update : update[]
+  update      : update,
+  getBlockers : getBlockers
 }
