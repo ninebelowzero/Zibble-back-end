@@ -18,7 +18,8 @@ app.use(bodyParser());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors({
-  config.cors
+  origin: config.cors
+  // origin: "http://serene-badlands-8627.herokuapp.com"
 }));
 
 // Auth
