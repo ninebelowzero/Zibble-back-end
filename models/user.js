@@ -6,7 +6,7 @@ var UserSchema = mongoose.Schema({
   email          : String,
   password       : String,
   experience     : String,
-  oftenForgotten : Array
+  blockers       : Array
 });
 
 UserSchema.pre('save', function(next){

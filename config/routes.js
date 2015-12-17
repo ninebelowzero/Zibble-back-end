@@ -28,4 +28,7 @@ router.route('/levels/:id')
 router.route('/users/:id')
   .put(UsersController.update);
 
+router.route('/users/:id/blockers')
+  .get(UsersController.getBlockers);
+
 module.exports = router;
